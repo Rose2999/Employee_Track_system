@@ -1,8 +1,9 @@
 const employeeRepository=require("../repositories/employee.repository");
+const ApiError=require("../utils/ApiError");
 const createEmployee=async(employeeData)=>{
     const existingEmployee=await employeeRepository.findByEmail(employeeData.email);
     if(existingEmployee){
-        throw new Error("Employee already exists");
+        throw new ApiError(400,"Employee already exists")
     }
     return employeeRepository.createEmployee(employeeData);
 };
@@ -17,14 +18,14 @@ const getEmployees=async(query)=>{
 const getEmployeeById=async(id)=>{
     const employee=await employeeRepository.findById(id);
     if(!employee){
-        throw new Error("Employee not found");
+        throw new ApiError(404,"Employee not found");
     }
     return employee;
 };
 const updateEmployee=async(id,data,userId)=>{
     const employee=await employeeRepository.findById(id);
     if(!employee){
-        throw new Error("Employee not found");
+        throw new ApiError(404,"Employee not found");
     }
     data.updatedBy=userId;
     await employeeRepository.updateEmployee(id,data);
@@ -33,7 +34,7 @@ const updateEmployee=async(id,data,userId)=>{
 const deleteEmployee=async(id)=>{
     const employee=await employeeRepository.findById(id);
     if(!employee){
-        throw new Error("Employee not found");
+         throw new ApiError(404,"Employee not found");
     }
     await employeeRepository.softDeleteEmployee(id);
     return {message:"Employee deleted successfully"};
