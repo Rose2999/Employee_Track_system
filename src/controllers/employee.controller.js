@@ -26,16 +26,37 @@ const getEmployeeById = async (req, res, next) => {
     }
 };
 const deleteEmployee = async (req, res, next) => {
-    try {
-        const employee = await employeeService.deleteEmployee(req.params.id);
-        res.status(200).json({ success: true, message: "Employee deleted successfully", data: employee });
-    } catch (error) {
-        next(error);
-    }
+  try {
+    const employee = await employeeService.deleteEmployee(req.params.id);
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Employee deleted successfully",
+        data: employee,
+      });
+  } catch (error) {
+    next(error);
+  }
+};
+const updateEmployee = async (req, res, next) => {
+  try {
+    const employee=await employeeService.updateEmployee(req.params.id,req.body,req.user.id);
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Employee updated successfully",
+        data: employee,
+      });
+  } catch (error) {
+    next(error);
+  }
 };
 module.exports = {
-    createEmployee,
-    getEmployees,
-    getEmployeeById,
-    deleteEmployee,
-};   
+  createEmployee,
+  getEmployees,
+  getEmployeeById,
+  deleteEmployee,
+  updateEmployee,
+};

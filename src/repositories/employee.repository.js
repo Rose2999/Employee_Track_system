@@ -31,10 +31,18 @@ const getEmployees=async({page,limit,search,sortBy,order})=>{
         order: [[sortBy, order]]
     });
 }
+const updateEmployee=async(id,data)=>{
+    return Employee.update(data,{where:{id}});
+}
+const softDeleteEmployee=async(id)=>{
+    return Employee.update({status:"INACTIVE"},{where:{id}});
+}   
 module.exports={
     createEmployee,
     findByEmail,
     findById,
     deleteEmployee,
+    updateEmployee,
     getEmployees,
+    softDeleteEmployee,
 };
