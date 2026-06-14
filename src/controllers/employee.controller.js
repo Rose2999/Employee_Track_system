@@ -11,6 +11,7 @@ const createEmployee = async (req, res, next) => {
       salary: req.body.salary,
       profileImage: req.file ? req.file.path : null,
       userId: req.user.id,
+      createdBy: req.user.id,
     };
     const employee = await employeeService.createEmployee(employeeData);
     res
