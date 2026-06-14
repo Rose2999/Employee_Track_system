@@ -15,6 +15,12 @@ router.post(
 );
 router.get("/", authMiddleware, employeeController.getEmployees);
 router.get("/:id", authMiddleware, employeeController.getEmployeeById);
+router.put(
+  "/:id",
+  authMiddleware,
+  roleMiddleware("ADMIN", "HR"),
+  employeeController.updateEmployee,
+);
 router.delete(
   "/:id",
   authMiddleware,

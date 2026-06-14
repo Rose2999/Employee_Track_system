@@ -15,7 +15,7 @@ const deleteEmployee=async(id)=>{
 };
 const getEmployees=async({page,limit,search,sortBy,order})=>{
     const offset=(page-1)*limit;
-    const where={};
+    const where={status:"ACTIVE"};
     if(search){
         where[Op.or]=[
             {firstName:{[Op.iLike]:`%${search}%`}},
