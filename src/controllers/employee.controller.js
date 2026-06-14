@@ -11,6 +11,7 @@ const createEmployee = async (req, res, next) => {
       salary: req.body.salary,
       profileImage: req.file ? req.file.path : null,
       userId: req.user.id,
+      createdBy: req.user.id,
     };
     const employee = await employeeService.createEmployee(employeeData);
     res
@@ -66,9 +67,24 @@ const deleteEmployee = async (req, res, next) => {
     next(error);
   }
 };
+const updateEmployee = async (req, res, next) => {
+  try {
+    const employee=await employeeService.updateEmployee(req.params.id,req.body,req.user.id);
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Employee updated successfully",
+        data: employee,
+      });
+  } catch (error) {
+    next(error);
+  }
+};
 module.exports = {
   createEmployee,
   getEmployees,
   getEmployeeById,
   deleteEmployee,
+  updateEmployee,
 };

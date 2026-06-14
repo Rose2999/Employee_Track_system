@@ -47,6 +47,14 @@ const Employee = sequelize.define(
         type: DataTypes.INTEGER,
         allowNull: false,
     },
+    createdBy:{
+      type:DataTypes.INTEGER,
+      allowNull:true,
+    },
+    updatedBy:{
+      type:DataTypes.INTEGER,
+      allowNull:true,
+    },
   },
   {
     tableName: "employees",

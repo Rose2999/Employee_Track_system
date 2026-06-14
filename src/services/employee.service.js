@@ -21,16 +21,27 @@ const getEmployeeById=async(id)=>{
     }
     return employee;
 };
+const updateEmployee=async(id,data,userId)=>{
+    const employee=await employeeRepository.findById(id);
+    if(!employee){
+        throw new Error("Employee not found");
+    }
+    data.updatedBy=userId;
+    await employeeRepository.updateEmployee(id,data);
+    return employeeRepository.findById(id);
+};
 const deleteEmployee=async(id)=>{
     const employee=await employeeRepository.findById(id);
     if(!employee){
         throw new Error("Employee not found");
-    }   
-    return employeeRepository.deleteEmployee(id);
+    }
+    await employeeRepository.softDeleteEmployee(id);
+    return {message:"Employee deleted successfully"};
 };
 module.exports={
     createEmployee,
     getEmployees,
     getEmployeeById,
     deleteEmployee,
+    updateEmployee,
 };
